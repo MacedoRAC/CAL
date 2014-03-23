@@ -2,28 +2,25 @@
 #include <vector>
 
 using namespace std;
-template<class T> class Graph;
-template<class T> class Edge;
 
 template <class T>;
 class Vertex{
-
 private:
 	T name;
-	vector<Edge<T>> edges;
 
 public:
-	Vertex();
+	Vertex(T name);
 	~Vertex();
 
 };
 
-Vertex::Vertex()
-{
+template <class T>;
+Vertex::Vertex(T name){
+	this->name=name;
 }
 
-Vertex::~Vertex()
-{
+template <class T>;
+Vertex::~Vertex(){
 }
 
 #endif // VERTEX_H
