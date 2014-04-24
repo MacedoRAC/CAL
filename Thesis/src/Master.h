@@ -8,30 +8,26 @@ using namespace std;
 class Master{
 public:
 	Master();
-	Master(string name, string univPost, vector<string> teached,int supervisedProjects);
+	Master(string name, string univPost, vector<string> teached,int supervisedProjects, vector<int> preferences);
 	~Master();
+	const string& getName() const;
+	void setName(const string& name);
+	const vector<int>& getPreferences() const;
+	void setPreferences(const vector<int>& preferences);
+	int getSupervisedProjects() const;
+	void setSupervisedProjects(int supervisedProjects);
+	const vector<string>& getTeachedCourses() const;
+	void setTeachedCourses(const vector<string>& teachedCourses);
+	const string& getUniversityPost() const;
+	void setUniversityPost(const string& universityPost);
 
 private:
 	string name;
 	string universityPost;
 	vector<string> teachedCourses;
 	int supervisedProjects;
+	vector<int> preferences;
 };
 
-Master::Master(){
-	this->name="";
-	this->universityPost="";
-	this->teachedCourses=vector<string>();
-	this->supervisedProjects=0;
-}
 
-Master::Master(string name, string univPost, vector<string> teached,int supervisedProjects){
-	this->name=name;
-	this->universityPost=univPost;
-	this->teachedCourses=teached;
-	this->supervisedProjects=supervisedProjects;
-}
-
-Master::~Master(){
-}
 #endif // !Master_H

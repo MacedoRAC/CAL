@@ -1,14 +1,29 @@
 #ifndef STUDENT_H
 
 #include<string>
+#include<vector>
 
 using namespace std;
 
 class Student{
 public:
 	Student();
-	Student(string name, unsigned int number, string course, float average, bool hasProject);
+	Student(string name, unsigned int number, string course, float average, bool hasProject, vector<int> preferences);
 	~Student();
+	float getAverage() const;
+	void setAverage(float average);
+	string getCourse() const;
+	void setCourse(string course);
+	bool isHasProject() const;
+	void setHasProject(bool hasProject);
+	string getName() const;
+	void setName(string name);
+	vector <int> getPreferences() const;
+	void setPreferences(vector <int> preferences);
+	unsigned int getStudentNumber() const;
+	void setStudentNumber(unsigned int studentNumber);
+
+
 
 private:
 	string name;
@@ -16,24 +31,9 @@ private:
 	string course;
 	float average;
 	bool hasProject;
+	vector<int> preferences;
 };
 
-Student::Student(){
-	this->name= "";
-	this->studentNumber=0;
-	this->course="";
-	this->average=0;
-	this->hasProject=false;
-}
 
-Student::Student(string name, unsigned int number, string course, float average, bool hasProject){
-	this->name= name;
-	this->studentNumber=number;
-	this->course=course;
-	this->average=average;
-	this->hasProject=hasProject;
-}
-
-Student::~Student(){
-}
 #endif // !STUDENT_H
+
