@@ -1,22 +1,35 @@
 #include"Owner.h"
 
-Owner::Owner(){
-	this->name="";
-	this->preferences=new vector<Student>();
-}
-
-Owner::Owner(string name,vector<Student> preferences){
-	this->name=name;
+Owner::Owner(string name, bool married, Project* project, vector<Student*> preferences, bool master): Person(name, married) {
+	this->project=project;
 	this->preferences=preferences;
+	this->master=master;
+	id++;
 }
 
-Owner::~Owner(){
+Owner::~Owner() {
 }
 
-const string& Owner::getName() const {
-	return name;
+bool Owner::isMaster() const {
+	return master;
 }
 
-void Owner::setName(const string& name) {
-	this->name = name;
+void Owner::setMaster(bool master) {
+	this->master = master;
+}
+
+const vector<Student*>& Owner::getPreferences() const {
+	return preferences;
+}
+
+void Owner::setPreferences(const vector<Student*>& preferences) {
+	this->preferences = preferences;
+}
+
+const Project*& Owner::getProject() const {
+	return project;
+}
+
+void Owner::setProject(const Project*& project) {
+	this->project = project;
 }

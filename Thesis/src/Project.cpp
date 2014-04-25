@@ -1,16 +1,12 @@
 #include "Project.h"
 
-Project::Project(){
-	id++;
-	this->theme="";
-	this->hasMaster=false;
-	this->hasStudent=false;
-}
 
-Project::Project(string theme,bool hasMaster,bool hasStudent){
+
+Project::Project(string theme,bool hasMaster,bool hasStudent, Owner* owner){
 	this->theme=theme;
 	this->hasMaster=hasMaster;
 	this->hasStudent=hasStudent;
+	this->owner=owner;
 }
 
 Project::~Project(){
@@ -32,18 +28,18 @@ void Project::setHasStudent(bool hasStudent) {
 	this->hasStudent = hasStudent;
 }
 
-static int Project::getId() const {
-	return id;
-}
-
-void Project::setId(static int id) {
-	this->id = id;
-}
-
 string Project::getTheme() const {
 	return theme;
 }
 
 void Project::setTheme(string theme) {
 	this->theme = theme;
+}
+
+Owner* Project::getOwner() const {
+	return owner;
+}
+
+void Project::setOwner(Owner* owner) {
+	this->owner = owner;
 }

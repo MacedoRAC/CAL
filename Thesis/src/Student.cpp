@@ -1,73 +1,34 @@
 #include "Student.h"
 
 
-Student::Student(){
-	this->name= "";
-	this->studentNumber=0;
-	this->course="";
-	this->average=0;
-	this->hasProject=false;
-	this->preferences=new vector<int>();
+Student::Student(): Person(){
+	this->project=false;
+	this->preferences=NULL;
+	id++;
 }
 
-Student::Student(string name, unsigned int number, string course, float average, bool hasProject, vector<int> preferences){
-	this->name= name;
-	this->studentNumber=number;
-	this->course=course;
-	this->average=average;
-	this->hasProject=hasProject;
+Student::Student(string name, bool married, bool proj, vector<Project*> preferences): Person(name, married) {
+
+	this->project=proj;
 	this->preferences=preferences;
+	id++;
 }
 
-Student::~Student(){
+Student::~Student() {
 }
 
-float Student::getAverage() const {
-	return average;
-}
-
-void Student::setAverage(float average) {
-	this->average = average;
-}
-
-string Student::getCourse() const {
-	return course;
-}
-
-void Student::setCourse(string course) {
-	this->course = course;
-}
-
-bool Student::isHasProject() const {
-	return hasProject;
-}
-
-void Student::setHasProject(bool hasProject) {
-	this->hasProject = hasProject;
-}
-
-string Student::getName() const {
-	return name;
-}
-
-void Student::setName(string name) {
-	this->name = name;
-}
-
-vector<int> Student::getPreferences() const {
+const vector<Project*>& Student::getPreferences() const {
 	return preferences;
 }
 
-void Student::setPreferences(vector<int> preferences) {
+void Student::setPreferences(const vector<Project*>& preferences) {
 	this->preferences = preferences;
 }
 
-unsigned int Student::getStudentNumber() const {
-	return studentNumber;
+bool Student::isProject() const {
+	return project;
 }
 
-void Student::setStudentNumber(unsigned int studentNumber) {
-	this->studentNumber = studentNumber;
+void Student::setProject(bool project) {
+	this->project = project;
 }
-
-

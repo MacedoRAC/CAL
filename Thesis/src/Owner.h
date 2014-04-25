@@ -1,21 +1,29 @@
-#ifndef OWNER_H
+#ifndef OWNER_H_
+#define OWNER_H_
 
 #include<string>
 #include<vector>
+#include"Person.h"
+#include"Project.h"
+#include"Student.h"
 
 using namespace std;
 
-class Owner{
+class Owner: public Person{
 public:
-	Owner();
-	Owner(string name, vector<Student> preferences);
+	Owner(string name, bool married, Project* project, vector<Student*> preferences, bool master);
 	~Owner();
-	const string& getName() const;
-	void setName(const string& name);
+	bool isMaster() const;
+	void setMaster(bool master);
+	const vector<Student*>& getPreferences() const;
+	void setPreferences(const vector<Student*>& preferences);
+	const Project*& getProject() const;
+	void setProject(const Project*& project);
 
 private:
-	string name;
-	vector<Student> preferences;
+	Project* project;
+	vector<Student*> preferences;
+	bool master;
 };
 
 

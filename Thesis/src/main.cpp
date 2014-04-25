@@ -4,18 +4,20 @@
 #include"Owner.h"
 #include"Graph.h"
 #include<vector>
+#include<stack>
+#include<iostream>
 
 using namespace std;
 
-#define MAX=700;
 
-vector<Vertex<Student>> students=new vector<Vertex<Student>>();
-vector<Vertex<Project>> projects=new vector<Vertex<Project>>();
-vector<Vertex<Master>> masters=new vector<Vertex<Master>>();
-vector<Vertex<Owner>> owners=new vector<Vertex<Owner>>;
+vector<Student*> students;
+vector<Project*> projects;
+vector<Master*> masters;
+vector<Owner*> owners;
+Graph<Person*> studentsProjects;
+Graph<Person*> mastersProjects;
 
-int ProjectListID[MAX][MAX];
-int StudentsListID[MAX][MAX];
+
 
 int main(){
 
@@ -38,24 +40,59 @@ void AddProject();
 void ViewThesisPlanner();
 
 
-//
+
+inline void NewThesisPlanner() {
+}
+
+inline void LoadThesisPlanner() {
+}
+
+inline void ThesisPlannerMenu() {
+}
+
+inline void AddStudent() {
+}
+
+inline void AddMaster() {
+}
+
+inline void AddOwner() {
+}
+
+inline void AddProject() {
+}
+
+inline void ViewThesisPlanner() {
+}
 
 
+void inicializeStudentsProjectsGraph(){
 
-void mostPreferedProjectByStudents(){
-	int nPrefsProj1=0;
-	int nPrefsProj2=0;
+	vector<Person*>::iterator it, ite;
 
-	for(unsigned int j=0; j<projects.size(); j++){
-		if(projects[j].isHasStudent())
-			j++;
-		else{
-		for(unsigned int i=0; i<students.size(); i++){
-			if(!students[i].isHasProject && students[i].getPreferences()[0]==project[0].getId())
-				nPrefsProj1++;
+	//add students to graph
+	it=students.begin();
+	ite=students.end();
+	while(it!=ite){
+		if(!studentsProjects.addVertex(it))
+			cout >> "Adding student to graph error!\n";
+		it++;
+	}
 
-			i++;
-		}
-		}
+	//add owners to graph
+	it=owners.begin();
+	ite=owners.end();
+	while(it!=ite){
+		if(!studentsProjects.addVertex(it))
+			cout >> "Adding owner to graph error!\n";
+		it++;
+	}
+
+	//add edges to graph
+	it=students.begin();
+	ite=students.end();
+
+	while(it!=ite){
+
 	}
 }

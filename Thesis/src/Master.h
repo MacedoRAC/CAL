@@ -1,32 +1,25 @@
-#ifndef Master_H
+#ifndef MASTER_H_
+#define MASTER_H_
 
 #include<string>
 #include<vector>
+#include"Project.h"
 
 using namespace std;
 
-class Master{
+class Master: public Person{
 public:
 	Master();
-	Master(string name, string univPost, vector<string> teached,int supervisedProjects, vector<int> preferences);
+	Master(string name,bool married, int supervisedProjects, vector<Project*> preferences);
 	~Master();
-	const string& getName() const;
-	void setName(const string& name);
-	const vector<int>& getPreferences() const;
-	void setPreferences(const vector<int>& preferences);
-	int getSupervisedProjects() const;
-	void setSupervisedProjects(int supervisedProjects);
-	const vector<string>& getTeachedCourses() const;
-	void setTeachedCourses(const vector<string>& teachedCourses);
-	const string& getUniversityPost() const;
-	void setUniversityPost(const string& universityPost);
+	int getMaxSupervisedProjects() const;
+	void setMaxSupervisedProjects(int maxSupervisedProjects);
+	const vector<Project*>& getPreferences() const;
+	void setPreferences(const vector<Project*>& preferences);
 
 private:
-	string name;
-	string universityPost;
-	vector<string> teachedCourses;
-	int supervisedProjects;
-	vector<int> preferences;
+	int maxSupervisedProjects;
+	vector<Project*> preferences;
 };
 
 

@@ -1,29 +1,31 @@
-#ifndef PROJECT_H
+#ifndef PROJECT_H_
+#define PROJECT_H_
 
 #include <string>
+#include"Owner.h"
 
 using namespace std;
 
 class Project{
 public:
-	Project();
-	Project(string theme,bool hasMaster,bool hasStudent);
+	Project(string theme,bool hasMaster,bool hasStudent, Owner* owner);
 	~Project();
 	bool isHasMaster() const;
 	void setHasMaster(bool hasMaster);
 	bool isHasStudent() const;
 	void setHasStudent(bool hasStudent);
-	static int getId() const;
-	void setId(static int id);
 	string getTheme() const;
 	void setTheme(string theme);
+	Owner* getOwner() const;
+	void setOwner(Owner* owner);
 
+	static unsigned int id;
 
 private:
-	static const int id = -1;
 	string theme;
 	bool hasMaster;
 	bool hasStudent;
+	Owner* owner;
 };
 
 

@@ -1,37 +1,25 @@
-#ifndef STUDENT_H
+#ifndef STUDENT_H_
+#define STUDENT_H_
 
 #include<string>
 #include<vector>
+#include"Person.h"
 
 using namespace std;
 
-class Student{
+class Student: public Person{
 public:
 	Student();
-	Student(string name, unsigned int number, string course, float average, bool hasProject, vector<int> preferences);
+	Student(string name, bool married, bool proj, vector<Project*> preferences);
 	~Student();
-	float getAverage() const;
-	void setAverage(float average);
-	string getCourse() const;
-	void setCourse(string course);
-	bool isHasProject() const;
-	void setHasProject(bool hasProject);
-	string getName() const;
-	void setName(string name);
-	vector <int> getPreferences() const;
-	void setPreferences(vector <int> preferences);
-	unsigned int getStudentNumber() const;
-	void setStudentNumber(unsigned int studentNumber);
-
-
+	const vector<Project*>& getPreferences() const;
+	void setPreferences(const vector<Project*>& preferences);
+	bool isProject() const;
+	void setProject(bool project);
 
 private:
-	string name;
-	unsigned int studentNumber;
-	string course;
-	float average;
-	bool hasProject;
-	vector<int> preferences;
+	bool project;
+	vector<Project*> preferences;
 };
 
 
