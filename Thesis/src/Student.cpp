@@ -1,13 +1,7 @@
 #include "Student.h"
 
 
-Student::Student(): Person(){
-	this->project=false;
-	this->preferences=NULL;
-	id++;
-}
-
-Student::Student(string name, bool married, bool proj, vector<Project*> preferences): Person(name, married) {
+Student::Student(string name, bool married, bool proj, vector<Project*> preferences): name(name), married(married) {
 
 	this->project=proj;
 	this->preferences=preferences;

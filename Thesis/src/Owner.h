@@ -8,6 +8,8 @@
 #include"Student.h"
 
 using namespace std;
+class Project;
+class Student;
 
 class Owner: public Person{
 public:
@@ -15,10 +17,10 @@ public:
 	~Owner();
 	bool isMaster() const;
 	void setMaster(bool master);
-	const vector<Student*>& getPreferences() const;
-	void setPreferences(const vector<Student*>& preferences);
-	const Project*& getProject() const;
-	void setProject(const Project*& project);
+	const vector<Student*> getPreferences() const;
+	void setPreferences(vector<Student*> preferences);
+	const Project* getProject() const;
+	void setProject(Project* project);
 
 private:
 	Project* project;
@@ -28,4 +30,4 @@ private:
 
 
 
-#endif // !Master_H
+#endif // !OWNER_H_H

@@ -13,6 +13,7 @@
 using namespace std;
 
 class Person{
+protected:
 	Person* partner;
 	string name;
 	bool married;
@@ -20,13 +21,16 @@ class Person{
 public:
 	static unsigned int id;
 	Person();
-	Person(string name, bool married);
+	Person(Person* partner, string name, bool married);
 	bool isMarried() const;
 	void setMarried(bool married);
+	void associate(Person *partner);
+	void disassociate();
 	string getName() const;
 	void setName(string name);
-	const Person*& getPartner() const;
-	void setPartner(const Person*& partner);
+	const Person* getPartner() const;
+	void setPartner(Person* partner);
+	unsigned int getId() const;
 };
 
 #endif /* PERSON_H_ */

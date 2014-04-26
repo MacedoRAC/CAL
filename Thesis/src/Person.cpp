@@ -10,11 +10,13 @@
 unsigned int Person::id=0;
 
 Person::Person() {
+	this->partner=NULL;
 	this->name="";
 	this->married=false;
 }
 
-Person::Person(string name, bool married) {
+Person::Person(Person* partner, string name, bool married) {
+	this->partner=partner;
 	this->name=name;
 	this->married=married;
 }
@@ -35,10 +37,24 @@ void Person::setName(string name) {
 	this->name=name;
 }
 
-const Person*& Person::getPartner() const {
+const Person* Person::getPartner() const {
 	return partner;
 }
 
-void Person::setPartner(const Person*& partner) {
+void Person::setPartner(Person* partner) {
 	this->partner = partner;
+}
+
+unsigned int Person::getId() const {
+		return id;
+}
+
+void Person::disassociate() {
+	partner=NULL;
+	married=false;
+}
+
+void Person::associate(Person* partner) {
+	this->partner=partner;
+	married=true;
 }

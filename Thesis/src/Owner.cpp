@@ -1,6 +1,6 @@
 #include"Owner.h"
 
-Owner::Owner(string name, bool married, Project* project, vector<Student*> preferences, bool master): Person(name, married) {
+Owner::Owner(string name, bool married, Project* project, vector<Student*> preferences, bool master): Person(name, married){
 	this->project=project;
 	this->preferences=preferences;
 	this->master=master;
@@ -18,18 +18,18 @@ void Owner::setMaster(bool master) {
 	this->master = master;
 }
 
-const vector<Student*>& Owner::getPreferences() const {
+const vector<Student*> Owner::getPreferences() const {
 	return preferences;
 }
 
-void Owner::setPreferences(const vector<Student*>& preferences) {
+void Owner::setPreferences(vector<Student*> preferences) {
 	this->preferences = preferences;
 }
 
-const Project*& Owner::getProject() const {
+const Project* Owner::getProject() const {
 	return project;
 }
 
-void Owner::setProject(const Project*& project) {
+void Owner::setProject(Project* project) {
 	this->project = project;
 }

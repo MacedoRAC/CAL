@@ -4,12 +4,13 @@
 #include<string>
 #include<vector>
 #include"Person.h"
+#include"Project.h"
 
 using namespace std;
+class Project;
 
 class Student: public Person{
 public:
-	Student();
 	Student(string name, bool married, bool proj, vector<Project*> preferences);
 	~Student();
 	const vector<Project*>& getPreferences() const;

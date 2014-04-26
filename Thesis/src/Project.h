@@ -5,6 +5,7 @@
 #include"Owner.h"
 
 using namespace std;
+class Owner;
 
 class Project{
 public:
@@ -29,4 +30,4 @@ private:
 };
 
 
-#endif // !PROJECT_H
+#endif // !PROJECT_H_
