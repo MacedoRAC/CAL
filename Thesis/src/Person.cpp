@@ -2,7 +2,7 @@
  * Person.cpp
  *
  *  Created on: 25/04/2014
- *      Author: André
+ *      Author: Andr?
  */
 
 #include"Person.h"

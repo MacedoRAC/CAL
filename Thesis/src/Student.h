@@ -11,7 +11,7 @@ class Project;
 
 class Student: public Person{
 public:
-	Student(string name, bool married, bool proj, vector<Project*> preferences);
+	Student(Person* partner, string name, bool married, bool proj, vector<Project*> preferences);
 	~Student();
 	const vector<Project*>& getPreferences() const;
 	void setPreferences(const vector<Project*>& preferences);

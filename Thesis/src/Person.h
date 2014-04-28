@@ -2,7 +2,7 @@
  * Person.h
  *
  *  Created on: 25/04/2014
- *      Author: André
+ *      Author: Andr?
  */
 
 #ifndef PERSON_H_

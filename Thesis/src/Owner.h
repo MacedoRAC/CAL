@@ -13,7 +13,7 @@ class Student;
 
 class Owner: public Person{
 public:
-	Owner(string name, bool married, Project* project, vector<Student*> preferences, bool master);
+	Owner(Person* partner, string name, bool married, Project* project, vector<Student*> preferences, bool master);
 	~Owner();
 	bool isMaster() const;
 	void setMaster(bool master);

@@ -3,8 +3,8 @@
 
 int main() {
   GraphViewer *gv = new GraphViewer(600, 600, true, 7772);
-
-  gv->createWindow(600, 600);
+  
+  gv->createWindow(600, 600);  
   gv->defineEdgeColor("blue");
   gv->defineVertexColor("lightGray");
 
@@ -21,12 +21,12 @@ int main() {
   gv->setEdgeThickness(1, 5);
 
   gv->setVertexColor(0, "green");
-
+ 
   gv->rearrange();
 
   GraphViewer *gv2 = new GraphViewer(600, 600, true, 7773);
-
-  gv2->createWindow(600, 600);
+  
+  gv2->createWindow(600, 600);  
   gv2->defineEdgeColor("green");
   gv2->defineVertexColor("yellow");
 
@@ -43,10 +43,10 @@ int main() {
   gv2->setEdgeThickness(1, 5);
 
   gv2->setVertexColor(0, "green");
-
+ 
   gv2->rearrange();
 
-
+  
 
   getchar();
 

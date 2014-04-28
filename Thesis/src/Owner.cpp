@@ -1,6 +1,6 @@
-#include"Owner.h"
+#include "Owner.h"
 
-Owner::Owner(string name, bool married, Project* project, vector<Student*> preferences, bool master): Person(name, married){
+Owner::Owner(Person* partner, string name, bool married, Project* project, vector<Student*> preferences, bool master): Person(partner, name, married){
 	this->project=project;
 	this->preferences=preferences;
 	this->master=master;

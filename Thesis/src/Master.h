@@ -3,24 +3,25 @@
 
 #include<string>
 #include<vector>
-#include"Project.h"
 #include"Person.h"
+#include "Owner.h"
 
 using namespace std;
 
 class Master: public Person{
 public:
 	Master();
-	Master(string name,bool married, int supervisedProjects, vector<Project*> preferences);
+	Master(Person* partner, string name,bool married, int supervisedProjects, vector<Owner*> preferences);
 	~Master();
 	int getMaxSupervisedProjects() const;
 	void setMaxSupervisedProjects(int maxSupervisedProjects);
-	const vector<Project*>& getPreferences() const;
-	void setPreferences(const vector<Project*>& preferences);
+	const vector<Owner*>& getPreferences() const;
+	void setPreferences(const vector<Owner*>& preferences);
+	void setSingle();
 
 private:
 	int maxSupervisedProjects;
-	vector<Project*> preferences;
+	vector<Owner*> preferences;
 };
 
 

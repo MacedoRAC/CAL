@@ -2,11 +2,10 @@
 
 Master::Master(): Person(){
 	this->maxSupervisedProjects=0;
-	this->preferences=new vector<Project*>();
 	id++;
 }
 
-Master::Master(string name, bool married, int maxSupervisedProjects, vector<Project*> preferences): Person(name, married) {
+Master::Master(Person* partner, string name, bool married, int maxSupervisedProjects, vector<Owner*> preferences): Person(partner, name, married) {
 
 	this->maxSupervisedProjects=maxSupervisedProjects;
 	this->preferences=preferences;
@@ -21,10 +20,14 @@ void Master::setMaxSupervisedProjects(int maxSupervisedProjects) {
 	this->maxSupervisedProjects = maxSupervisedProjects;
 }
 
-const vector<Project*>& Master::getPreferences() const {
+const vector<Owner*>& Master::getPreferences() const {
 	return preferences;
 }
 
-void Master::setPreferences(const vector<Project*>& preferences) {
+void Master::setPreferences(const vector<Owner*>& preferences) {
 	this->preferences = preferences;
+}
+
+void Master::setSingle(){
+	married = false;
 }

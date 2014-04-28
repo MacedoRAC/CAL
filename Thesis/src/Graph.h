@@ -4,9 +4,17 @@
 #ifndef GRAPH_H_
 #define GRAPH_H_
 
+
+
+#include "graphviewer.h"
+
 #include <vector>
-#include <list>
 #include <queue>
+#include <list>
+#include <limits>
+#include <iostream>
+#include <cstdio>
+
 using namespace std;
 
 template <class T> class Edge;
@@ -30,6 +38,7 @@ public:
 	Vertex(const Vertex<T> &v);
 	T getInfo() const;
 	friend class Graph<T>;
+	vector<Edge<T> > getEdges(){ return adj;};
 };
 
 
@@ -65,13 +74,16 @@ void Vertex<T>::addEdge(Vertex<T> *dest, double w) {
 	adj.push_back(edgeD);
 }
 
-template <class T>
+
+template<class T>
 class Edge {
 	Vertex<T> * dest;
 	double weight;
 	bool visited;
 public:
 	Edge(Vertex<T> *d, double w);
+	Vertex<T> * getDest(){ return dest ;} ;
+	double getWeight(){return weight ; } ;
 	friend class Graph<T>;
 	friend class Vertex<T>;
 };
@@ -94,6 +106,7 @@ public:
 	int maxNewChildren(Vertex<T> *v, T &inf) const;
 	vector<Vertex<T> * > getVertexSet() const;
 	int getNumVertex() const;
+	void DrawView(GraphViewer *_graphviewer, int NPeople, int NProjects);
 
 	void clone(Graph<T> &g);
 };
@@ -103,6 +116,48 @@ int Graph<T>::getNumVertex() const {
 	return vertexSet.size();
 }
 
+template<class T>
+void Graph<T>::DrawView(GraphViewer * _graphviewer, int NPeople, int NProjects) {
+	
+	int incares = 0;
+
+	for (int i = 0; i < NPeople; i++) {
+		_graphviewer->addNode(i + 1, 50, 120 + 120 * i);
+ 		_graphviewer->setVertexLabel(i+1,vertexSet[i]->getInfo()->getName());
+
+	}
+	for (int i = NPeople; i < NPeople + NProjects; i++) {
+		_graphviewer->addNode(i + 1, 350, 120 + 120 * (i - NPeople));
+		_graphviewer->setVertexLabel(i+1,vertexSet[i]->getInfo()->getName());
+
+	}
+	for (int i = NPeople + NProjects; i < vertexSet.size(); i++) {
+		_graphviewer->addNode(i + 1, 650, 120 + 120 * (i - NPeople - NProjects));
+		_graphviewer->setVertexLabel(i+1,vertexSet[i]->getInfo()->getName());
+
+	}
+
+	for (int i = 0; i < vertexSet.size(); i++) {
+		for (int j = 0; j < vertexSet[i]->adj.size(); j++) {
+			int l = vertexSet[i]->adj[j].dest->getInfo()->getId();
+			_graphviewer->addEdge(incares, i + 1, l, EdgeType::DIRECTED);
+
+			double s = vertexSet[i]->adj[j].weight;
+
+			_graphviewer->setEdgeWeight(incares, s+1);
+
+			if (vertexSet[i]->adj[j].dest->getInfo()->isMarried()) {
+				_graphviewer->setEdgeThickness(incares,4);
+			} else
+				_graphviewer->setEdgeThickness(incares,1);
+
+			incares++;
+		}
+
+	}
+
+
+}
 
 template <class T>
 vector<Vertex<T> * > Graph<T>::getVertexSet() const {
