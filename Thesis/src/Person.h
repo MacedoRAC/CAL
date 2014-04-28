@@ -1,36 +1,66 @@
-/*
- * Person.h
- *
- *  Created on: 25/04/2014
- *      Author: Andr?
- */
-
 #ifndef PERSON_H_
 #define PERSON_H_
 
 #include<string>
+#include<vector>
 
 using namespace std;
 
 class Person{
-protected:
-	Person* partner;
+private:
 	string name;
-	bool married;
-
+	int id;
+	vector<int> Orderedpreferences;
+	vector<int> Prioritypreferences;
+	int Nmax;
 public:
-	static unsigned int id;
 	Person();
-	Person(Person* partner, string name, bool married);
-	bool isMarried() const;
-	void setMarried(bool married);
-	void associate(Person *partner);
-	void disassociate();
-	string getName() const;
-	void setName(string name);
-	const Person* getPartner() const;
-	void setPartner(Person* partner);
-	unsigned int getId() const;
+	Person(int id, string name, vector<int> Orderedpreferences, vector<int> Prioritypreferences, int Nmax);
+	int getId() const;
+	void setId(int id);
+	const string& getName() const;
+	void setName(const string& name);
+	bool operator==(const Person &p);
+	vector<int> getOrderedpreferences(){return Orderedpreferences;};
+	vector<int> getPrioritypreferences(){return Prioritypreferences;};
+	void setOrderedpreferences(vector<int> ordered){this->Orderedpreferences=ordered;};
+	void setPrioritypreferences(vector<int> priority){this->Prioritypreferences=priority;};
+	int getNmax(){return Nmax;};
+	void setNmax(int max){this->Nmax=max;};
+
 };
 
-#endif /* PERSON_H_ */
+Person::Person(){
+	this->name="";
+	this->id=0;
+}
+
+Person:: Person(int id, string name, vector<int> Orderedpreferences, vector<int> Prioritypreferences, int Nmax ){
+	this->name=name;
+	this->id=id;
+	this->Orderedpreferences=Orderedpreferences;
+	this->Prioritypreferences=Prioritypreferences;
+	this->Nmax=Nmax;
+}
+
+inline int Person::getId() const {
+	return id;
+}
+
+inline void Person::setId(int id) {
+	this->id = id;
+}
+
+inline const string& Person::getName() const {
+	return name;
+}
+
+inline void Person::setName(const string& name) {
+	this->name = name;
+}
+
+inline bool Person::operator==(const Person &p){
+	return (name==p.getName());
+}
+
+#endif

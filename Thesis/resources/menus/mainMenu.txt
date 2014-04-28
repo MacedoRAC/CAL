@@ -1,4 +1,0 @@
-=== Tupiniquim - river shipping company === (CTRL-Z or E to exit)
--* N#002#New hydrographic basin
--* L#003#Load hydrographic basin
--* E#001#Exit

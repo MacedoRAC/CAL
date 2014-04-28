@@ -1,0 +1,24 @@
+Blip
+Webdesign
+1;2;4
+2;3
+António Cardoso
+Segurança de Sistemas
+3;4
+1;2;3
+Microsoft
+Visual Studio 2015
+1;2;3;4
+1;2
+Grind
+Android o futuro
+2;5
+3;4;5
+Miguuel Faria
+Algoritmos físicos
+3;4;5
+2;3
+Google
+Motores de busca
+1;
+1;3

@@ -1,0 +1,12 @@
+Ana Ferreira
+2
+1;2;5
+2;5
+João Cardoso
+1
+3;4
+1
+Paula Miranda
+3
+2;3;4;5
+1;2;3;4

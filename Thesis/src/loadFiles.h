@@ -20,7 +20,7 @@ vector<Student*> loadStudents() {
 	is.open("students.txt");
 	if (!is.is_open()) {
 		cout << "Reading students file error\n";
-		return NULL;
+		return students;
 	}
 
 	string name;
@@ -63,7 +63,7 @@ vector<Student*> loadStudents() {
 	return students;
 }
 
-vector<Owner*> loadProjResp() {
+vector<Owner*> loadOwners() {
 
 	vector<Owner*> owners;
 	cout << "Loading owners from file\n";
@@ -71,7 +71,7 @@ vector<Owner*> loadProjResp() {
 	is.open("owners.txt");
 	if (!is.is_open()) {
 		cout << "Reading owners file error\n";
-		return NULL;
+		return owners;
 	}
 
 	string name;
@@ -108,7 +108,7 @@ vector<Owner*> loadProjResp() {
 			priority.push_back(e);
 		}
 
-		Owner* owner = new Owner*(++id, name, ordered, priority, nproj);
+		Owner* owner = new Owner(++id, name, ordered, priority, nproj);
 		owners.push_back(owner);
 
 	}
@@ -118,14 +118,14 @@ vector<Owner*> loadProjResp() {
 	return owners;
 }
 
-vector<Master*> loadSupervisors() {
+vector<Master*> loadMasters() {
 	vector<Master*> masters;
 	cout << "Loading masters from file";
 	ifstream is;
 	is.open("masters.txt");
 	if (!is.is_open()) {
 		cout << "Reading masters file error\n";
-		return NULL;
+		return masters;
 	}
 
 	string name;
@@ -165,7 +165,7 @@ vector<Master*> loadSupervisors() {
 			priority.push_back(e);
 		}
 
-		Master* s = new Master*(++id, name, max, ordered, priority);
+		Master* s = new Master(++id, name, ordered, priority ,max);
 		masters.push_back(s);
 
 	}

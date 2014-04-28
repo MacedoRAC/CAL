@@ -3,6 +3,22 @@
 #include"Master.h"
 
 
+bool allStudentsHaveThesis(Graph<Person>* graph) {
+	bool result;
+	int inc = 0;
+	for (int i = 0; i < graph->getNumberOfStudents(); i++) {
+		result = false;
+		for (int j = 0; j < graph->getVertexSet()[i]->getAdj().size(); j++) {
+
+			if (graph->getVertexSet()[i]->getAdj()[j].isProposed() && !graph->getVertexSet()[i]->getAdj()[j].isRejected()) {
+				result = true;
+				inc++;
+			}
+		}
+	}
+	return result;
+}
+
 void thesisAttribuitiontoStudent(Graph<Person>* graph) { //applies stable marriage algorithm
 
 	int end, min = -1;
@@ -25,7 +41,7 @@ void thesisAttribuitiontoStudent(Graph<Person>* graph) { //applies stable marria
 			graph->getVertexSet()[i]->getAdj()[end].setRejected(true);
 			Vertex<Person> * p = graph->getVertexSet()[i]->getAdj()[end].getDest();
 			for (int c = 0; c < p->getAdj().size(); c++) {
-				if (p->getAdj()[c].dest->info == graph->getVertexSet()[i]->getInfo()) {
+				if (p->getAdj()[c].getDest()->getInfo() == graph->getVertexSet()[i]->getInfo()) {
 					p->getAdj()[c].setProposed(true);
 				}
 			}
@@ -64,21 +80,7 @@ void thesisAttribuitiontoStudent(Graph<Person>* graph) { //applies stable marria
 }
 
 
-bool allStudentsHaveThesis(Graph<Person>* graph) {
-	bool result;
-	int inc = 0;
-	for (int i = 0; i < graph->getNumberOfStudents(); i++) {
-		result = false;
-		for (int j = 0; j < graph->getVertexSet()[i]->getAdj().size(); j++) {
 
-			if (graph->getVertexSet()[i]->getAdj()[j].isProposed() && !graph->getVertexSet()[i]->getAdj()[j].isRejected()) {
-				result = true;
-				inc++;
-			}
-		}
-	}
-	return result;
-}
 
 
 void thesisAttribuitionMasters(Graph<Person>* graph,  vector<vector<int>> IDmatrix) {
@@ -87,7 +89,7 @@ void thesisAttribuitionMasters(Graph<Person>* graph,  vector<vector<int>> IDmatr
 	int mastersTotalProjects = 0;
 
 	for (int i = graph->getNumberOfStudents() + graph->getNumberOfOwners(); i < graph->getVertexSet().size(); i++){
-		Master m= graph->getVertexSet()[i]->getInfo();
+		Person m= graph->getVertexSet()[i]->getInfo();
 		mastersTotalProjects += m.getNmax();
 	}
 
@@ -124,7 +126,7 @@ void thesisAttribuitionMasters(Graph<Person>* graph,  vector<vector<int>> IDmatr
 
 	int r = 1;
 	for (int i = graph->getNumberOfStudents() + graph->getNumberOfOwners(); i < graph->getVertexSet().size(); i++) {
-		Master m= graph->getVertexSet()[i]->getInfo();
+		Person m= graph->getVertexSet()[i]->getInfo();
 		for (int j = 0; j < m.getNmax(); j++) {
 			IDmatrix[0][r] = graph->getVertexSet()[i]->getInfo().getId();
 			r++;
@@ -211,19 +213,22 @@ void thesisAttribuitionMasters(Graph<Person>* graph,  vector<vector<int>> IDmatr
 
 	}
 
-	bool rejectedj[sizeMatrix];
+	vector<bool>rejectedj;
 	for (int i = 0; i < sizeMatrix; i++)
 		rejectedj[i] = false;
-	bool rejectedi[sizeMatrix];
+
+	vector<bool>rejectedi;
 	for (int i = 0; i < sizeMatrix; i++)
 		rejectedi[i] = false;
-	bool tickedj[sizeMatrix];
+	
+	vector<bool>tickedj;
 	for (int i = 0; i < sizeMatrix; i++)
 		tickedj[i] = false;
-	bool tickedi[sizeMatrix];
+	
+	vector<bool>tickedi;
 	for (int i = 0; i < sizeMatrix; i++)
 		tickedi[i] = false;
-	bool accepted[sizeMatrix][sizeMatrix];
+	vector<vector<bool>> accepted;
 	int atributed = 0;
 
 	bool assigned = false;

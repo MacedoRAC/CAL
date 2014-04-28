@@ -1,12 +1,6 @@
-/*
- * Graph.h
- */
+
 #ifndef GRAPH_H_
 #define GRAPH_H_
-
-
-
-#include "graphviewer.h"
 
 #include <vector>
 #include <queue>
@@ -14,179 +8,236 @@
 #include <limits>
 #include <iostream>
 #include <cstdio>
-
+#include "graphviewer.h"
+#include <iostream>
 using namespace std;
 
-template <class T> class Edge;
-template <class T> class Graph;
+template<class T> class Edge;
+template<class T> class Graph;
 
-template <class T>
+const int NOT_VISITED = 0;
+const int BEING_VISITED = 1;
+const int DONE_VISITED = 2;
+
+/*
+ * Class Vertex
+ */
+template<class T>
 class Vertex {
 	T info;
-	vector<Edge<T>  > adj;
+	vector<Edge<T> > adj;
 	bool visited;
+	bool processing;
 	void addEdge(Vertex<T> *dest, double w);
 	bool removeEdgeTo(Vertex<T> *d);
 
-	//Fp09
-	int num;
-	int low;
-	Vertex<T>* path;
-
+	//folha pratica 5
+	int indegree;
+	int dist;
 public:
 	Vertex(T in);
-	Vertex(const Vertex<T> &v);
+	friend class Graph<T> ;
+	vector<Edge<T> > getAdj() {
+		return adj;
+	}
 	T getInfo() const;
-	friend class Graph<T>;
-	vector<Edge<T> > getEdges(){ return adj;};
+	int getIndegree() const;
+
+	Vertex* path;
+
 };
 
-
-template <class T>
-T Vertex<T>::getInfo() const {
-	return info;
-}
-
-template <class T>
+template<class T>
 bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
-	typename vector<Edge<T> >::iterator it= adj.begin();
-	typename vector<Edge<T> >::iterator ite= adj.end();
-	while (it!=ite) {
+	d->indegree--; //adicionado do exercicio 5
+	typename vector<Edge<T> >::iterator it = adj.begin();
+	typename vector<Edge<T> >::iterator ite = adj.end();
+	while (it != ite) {
 		if (it->dest == d) {
 			adj.erase(it);
 			return true;
-		}
-		else it++;
+		} else
+			it++;
 	}
 	return false;
 }
 
-template <class T>
-Vertex<T>::Vertex(T in): info(in), visited(false), num(0), low(0), path(NULL){}
+//atualizado pelo exercicio 5
+template<class T>
+Vertex<T>::Vertex(T in) :
+info(in), visited(false), processing(false), indegree(0), dist(0) {
+	path = NULL;
+}
 
-
-template <class T>
-Vertex<T>::Vertex(const Vertex<T> & in): info(in.info), visited(in.visited), num(in.num), low(in.low), path(NULL){}
-
-template <class T>
+template<class T>
 void Vertex<T>::addEdge(Vertex<T> *dest, double w) {
-	Edge<T> edgeD(dest,w);
+	Edge<T> edgeD(dest, w);
 	adj.push_back(edgeD);
 }
 
+template<class T>
+T Vertex<T>::getInfo() const {
+	return this->info;
+}
 
+template<class T>
+int Vertex<T>::getIndegree() const {
+	return this->indegree;
+}
+
+/*
+ * Class Edge
+ */
 template<class T>
 class Edge {
 	Vertex<T> * dest;
 	double weight;
-	bool visited;
+	bool proposed;
+	bool rejected;
 public:
 	Edge(Vertex<T> *d, double w);
-	Vertex<T> * getDest(){ return dest ;} ;
-	double getWeight(){return weight ; } ;
-	friend class Graph<T>;
-	friend class Vertex<T>;
+	friend class Graph<T> ;
+	friend class Vertex<T> ;
+
+	bool getProp() {
+		return proposed;
+	}
+	bool getRej() {
+		return rejected;
+	}
+	Vertex<T> * getDest() {
+		return dest;
+	}
+
+	void setDest(const Vertex<T>*& dest);
+	bool isProposed() const;
+	void setProposed(bool proposed);
+	bool isRejected() const;
+	void setRejected(bool rejected);
+	double getWeight() const;
+	void setWeight(double weight);
 };
 
-template <class T>
-Edge<T>::Edge(Vertex<T> *d, double w): dest(d), weight(w), visited(false){}
+template<class T>
+inline void Edge<T>::setDest(const Vertex<T>*& dest) {
+	this->dest = dest;
+}
 
-template <class T>
+template<class T>
+inline bool Edge<T>::isProposed() const {
+	return proposed;
+}
+
+template<class T>
+inline void Edge<T>::setProposed(bool proposed) {
+	this->proposed = proposed;
+}
+
+template<class T>
+inline bool Edge<T>::isRejected() const {
+	return rejected;
+}
+
+template<class T>
+inline void Edge<T>::setRejected(bool rejected) {
+	this->rejected = rejected;
+}
+
+template<class T>
+inline double Edge<T>::getWeight() const {
+	return weight;
+}
+
+template<class T>
+inline void Edge<T>::setWeight(double weight) {
+	this->weight = weight;
+}
+
+template<class T>
+Edge<T>::Edge(Vertex<T> *d, double w) :
+dest(d), weight(w), proposed(false), rejected(false) {
+}
+
+/*
+ * Class Graph
+ */
+template<class T>
 class Graph {
-	vector<Vertex<T> *> vertexSet;
 	void dfs(Vertex<T> *v, vector<T> &res) const;
+	int numberOfStudents, numberOfOwners, numberOfMasters;
 
 public:
+	vector<Vertex<T> *> vertexSet;
 	bool addVertex(const T &in);
 	bool addEdge(const T &sourc, const T &dest, double w);
 	bool removeVertex(const T &in);
 	bool removeEdge(const T &sourc, const T &dest);
-	vector<T> dfs() const;
-	vector<T> bfs(Vertex<T> *v) const;
-	int maxNewChildren(Vertex<T> *v, T &inf) const;
-	vector<Vertex<T> * > getVertexSet() const;
-	int getNumVertex() const;
-	void DrawView(GraphViewer *_graphviewer, int NPeople, int NProjects);
+	void setnumberOfStudents(int n);
+	void setnumberOfOwners(int n);
+	void drawGraph();
+	void setnumberOfMasters(int n);
 
-	void clone(Graph<T> &g);
+	//Exercicio 5
+	Vertex<T>* getVertex(const T &v) const;
+	int getNumberOfMasters() const;
+	void setNumberOfMasters(int numberOfMasters);
+	int getNumberOfOwners() const;
+	void setNumberOfOwners(int numberOfOwners);
+	int getNumberOfStudents() const;
+	void setNumberOfStudents(int numberOfStudents);
+	const vector<Vertex<T> *>& getVertexSet() const;
+	void setVertexSet(const vector<Vertex<T> *>& vertexSet);
 };
 
-template <class T>
-int Graph<T>::getNumVertex() const {
-	return vertexSet.size();
-}
-
 template<class T>
-void Graph<T>::DrawView(GraphViewer * _graphviewer, int NPeople, int NProjects) {
-	
-	int incares = 0;
-
-	for (int i = 0; i < NPeople; i++) {
-		_graphviewer->addNode(i + 1, 50, 120 + 120 * i);
- 		_graphviewer->setVertexLabel(i+1,vertexSet[i]->getInfo()->getName());
-
-	}
-	for (int i = NPeople; i < NPeople + NProjects; i++) {
-		_graphviewer->addNode(i + 1, 350, 120 + 120 * (i - NPeople));
-		_graphviewer->setVertexLabel(i+1,vertexSet[i]->getInfo()->getName());
-
-	}
-	for (int i = NPeople + NProjects; i < vertexSet.size(); i++) {
-		_graphviewer->addNode(i + 1, 650, 120 + 120 * (i - NPeople - NProjects));
-		_graphviewer->setVertexLabel(i+1,vertexSet[i]->getInfo()->getName());
-
-	}
-
-	for (int i = 0; i < vertexSet.size(); i++) {
-		for (int j = 0; j < vertexSet[i]->adj.size(); j++) {
-			int l = vertexSet[i]->adj[j].dest->getInfo()->getId();
-			_graphviewer->addEdge(incares, i + 1, l, EdgeType::DIRECTED);
-
-			double s = vertexSet[i]->adj[j].weight;
-
-			_graphviewer->setEdgeWeight(incares, s+1);
-
-			if (vertexSet[i]->adj[j].dest->getInfo()->isMarried()) {
-				_graphviewer->setEdgeThickness(incares,4);
-			} else
-				_graphviewer->setEdgeThickness(incares,1);
-
-			incares++;
-		}
-
-	}
-
-
-}
-
-template <class T>
-vector<Vertex<T> * > Graph<T>::getVertexSet() const {
-	return vertexSet;
-}
-
-template <class T>
 bool Graph<T>::addVertex(const T &in) {
-	typename vector<Vertex<T>*>::iterator it= vertexSet.begin();
-	typename vector<Vertex<T>*>::iterator ite= vertexSet.end();
-	for (; it!=ite; it++)
-		if ((*it)->info == in) return false;
+	typename vector<Vertex<T>*>::iterator it = vertexSet.begin();
+	typename vector<Vertex<T>*>::iterator ite = vertexSet.end();
+	for (; it != ite; it++) {
+		if ((*it)->info == in) {
+
+			return false;
+		}
+	}
 	Vertex<T> *v1 = new Vertex<T>(in);
 	vertexSet.push_back(v1);
+
 	return true;
 }
 
-template <class T>
+template<class T>
+void Graph<T>::setnumberOfStudents(int n) {
+	numberOfStudents = n;
+}
+
+template<class T>
+void Graph<T>::setnumberOfOwners(int n) {
+	numberOfOwners = n;
+}
+
+template<class T>
+void Graph<T>::setnumberOfMasters(int n) {
+	numberOfMasters = n;
+}
+
+template<class T>
 bool Graph<T>::removeVertex(const T &in) {
-	typename vector<Vertex<T>*>::iterator it= vertexSet.begin();
-	typename vector<Vertex<T>*>::iterator ite= vertexSet.end();
-	for (; it!=ite; it++) {
-		if ((*it)->info == in) {
-			Vertex<T> * v= *it;
-			vertexSet.erase(it);
-			typename vector<Vertex<T>*>::iterator it1= vertexSet.begin();
-			typename vector<Vertex<T>*>::iterator it1e= vertexSet.end();
-			for (; it1!=it1e; it1++) {
+	typename vector<Vertex<T>*>::iterator it = vertexSet.begin();
+	typename vector<Vertex<T>*>::iterator ite = vertexSet.end();
+	for (; it != ite; it++) {
+		if ((*it)->info == in) { //se encontrar
+			Vertex<T> * v = *it;  //guarda temporario
+			vertexSet.erase(it); //apaga
+			typename vector<Vertex<T>*>::iterator it1 = vertexSet.begin();
+			typename vector<Vertex<T>*>::iterator it1e = vertexSet.end();
+			for (; it1 != it1e; it1++) {
 				(*it1)->removeEdgeTo(v);
+			}
+			// decrementa indegree para arestas que se iniciam em "v"
+			typename vector<Edge<T> >::iterator itAdj = v->adj.begin();
+			typename vector<Edge<T> >::iterator itAdje = v->adj.end();
+			for (; itAdj != itAdje; itAdj++) {
+				itAdj->dest->indegree--;
 			}
 			delete v;
 			return true;
@@ -195,146 +246,155 @@ bool Graph<T>::removeVertex(const T &in) {
 	return false;
 }
 
-template <class T>
+template<class T>
 bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
-	typename vector<Vertex<T>*>::iterator it= vertexSet.begin();
-	typename vector<Vertex<T>*>::iterator ite= vertexSet.end();
-	int found=0;
-	Vertex<T> *edgeS, *edgeD;
-	while (found!=2 && it!=ite ) {
-		if ( (*it)->info == sourc )
-			{ edgeS=*it; found++;}
-		if ( (*it)->info == dest )
-			{ edgeD=*it; found++;}
-		it ++;
+	typename vector<Vertex<T>*>::iterator it = vertexSet.begin();
+	typename vector<Vertex<T>*>::iterator ite = vertexSet.end();
+	int found = 0;
+	Vertex<T> *vS, *vD;
+	while (found != 2 && it != ite) {
+		if ((*it)->info == sourc) {
+			vS = *it;
+			found++;
+		}
+		if ((*it)->info == dest) {
+			vD = *it;
+			found++;
+		}
+		it++;
 	}
-	if (found!=2) return false;
-	edgeS->addEdge(edgeD,w);
+	if (found != 2)
+		return false;
+	vD->indegree++; //adicionado pelo exercicio 5
+	vS->addEdge(vD, w);
+
 	return true;
 }
 
-template <class T>
+template<class T>
 bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
-	typename vector<Vertex<T>*>::iterator it= vertexSet.begin();
-	typename vector<Vertex<T>*>::iterator ite= vertexSet.end();
-	int found=0;
-	Vertex<T> *edgeS, *edgeD;
-	while (found!=2 && it!=ite ) {
-		if ( (*it)->info == sourc )
-			{ edgeS=*it; found++;}
-		if ( (*it)->info == dest )
-			{ edgeD=*it; found++;}
-		it ++;
-	}
-	if (found!=2) return false;
-	return edgeS->removeEdgeTo(edgeD);
-}
-
-template <class T>
-void Graph<T>::clone(Graph<T> &gr) {
-	typename vector<Vertex<T>*>::const_iterator it= vertexSet.begin();
-	typename vector<Vertex<T>*>::const_iterator ite= vertexSet.end();
-
-	// 1. clone vertices
-	for (; it !=ite; it++) {
-		gr.addVertex((*it)->getInfo());
-		gr.vertexSet[gr.getNumVertex()-1]->visited = false;
-	}
-
-	// 2. clone edges
-	for (it=vertexSet.begin(); it !=ite; it++) {
-		typename vector<Edge<T> >::iterator edgeIt= ((*it)->adj).begin();
-		typename vector<Edge<T> >::iterator edgeIte= ((*it)->adj).end();
-		for (; edgeIt !=edgeIte; edgeIt++) {
-			gr.addEdge((*it)->getInfo(), edgeIt->dest->getInfo(), edgeIt->weight);
+	typename vector<Vertex<T>*>::iterator it = vertexSet.begin();
+	typename vector<Vertex<T>*>::iterator ite = vertexSet.end();
+	int found = 0;
+	Vertex<T> *vS, *vD;
+	while (found != 2 && it != ite) {
+		if ((*it)->info == sourc) {
+			vS = *it;
+			found++;
 		}
+		if ((*it)->info == dest) {
+			vD = *it;
+			found++;
+		}
+		it++;
 	}
+	if (found != 2)
+		return false;
+
+	//adicionado pelo exercicio 5
+	return vS->removeEdgeTo(vD);
 }
 
-template <class T>
-vector<T> Graph<T>::dfs() const {
-	typename vector<Vertex<T>*>::const_iterator it= vertexSet.begin();
-	typename vector<Vertex<T>*>::const_iterator ite= vertexSet.end();
-	for (; it !=ite; it++)
-		(*it)->visited=false;
-	vector<T> res;
-	it=vertexSet.begin();
-	for (; it !=ite; it++)
-	    if ( (*it)->visited==false )
-	    	dfs(*it,res);
-	return res;
+template<class T>
+inline int Graph<T>::getNumberOfMasters() const {
+	return numberOfMasters;
 }
 
-template <class T>
-void Graph<T>::dfs(Vertex<T> *v,vector<T> &res) const {
-	v->visited = true;
-	res.push_back(v->info);
-	typename vector<Edge<T> >::iterator it= (v->adj).begin();
-	typename vector<Edge<T> >::iterator ite= (v->adj).end();
-	for (; it !=ite; it++)
-	    if ( it->dest->visited == false )
-	    	dfs(it->dest, res);
+template<class T>
+inline void Graph<T>::setNumberOfMasters(int numberOfMasters) {
+	this->numberOfMasters = numberOfMasters;
 }
 
-template <class T>
-vector<T> Graph<T>::bfs(Vertex<T> *v) const {
-	vector<T> res;
-	queue<Vertex<T> *> q;
-	q.push(v);
-	v->visited = true;
-	while (!q.empty()) {
-		Vertex<T> *v1 = q.front();
-		q.pop();
-		res.push_back(v1->info);
-		typename vector<Edge<T> >::iterator it=v1->adj.begin();
-		typename vector<Edge<T> >::iterator ite=v1->adj.end();
-		for (; it!=ite; it++) {
-			Vertex<T> *d = it->dest;
-			if (d->visited==false) {
-				d->visited=true;
-				q.push(d);
+template<class T>
+inline int Graph<T>::getNumberOfOwners() const {
+	return numberOfOwners;
+}
+
+template<class T>
+inline void Graph<T>::setNumberOfOwners(int numberOfOwners) {
+	this->numberOfOwners = numberOfOwners;
+}
+
+template<class T>
+inline int Graph<T>::getNumberOfStudents() const {
+	return numberOfStudents;
+}
+
+template<class T>
+inline void Graph<T>::setNumberOfStudents(int numberOfStudents) {
+	this->numberOfStudents = numberOfStudents;
+}
+
+template<class T>
+inline const vector<Vertex<T> *>& Graph<T>::getVertexSet() const {
+	return vertexSet;
+}
+
+template<class T>
+inline void Graph<T>::setVertexSet(const vector<Vertex<T> *>& vertexSet) {
+	this->vertexSet = vertexSet;
+}
+
+//****
+template<class T>
+Vertex<T>* Graph<T>::getVertex(const T &v) const {
+	for (unsigned int i = 0; i < vertexSet.size(); i++)
+		if (vertexSet[i]->info == v)
+			return vertexSet[i];
+	return NULL;
+}
+
+
+template<class T>
+void Graph<T>::drawGraph() {
+	int incares = 0;
+
+	GraphViewer* _graphviewer = new GraphViewer(800, 600, false);
+	_graphviewer->createWindow(800, 600);
+
+	for (int i = 0; i < numberOfStudents; i++) {
+		_graphviewer->addNode(i + 1, 50, 120 + 120 * i);
+		_graphviewer->setVertexLabel(i+1,vertexSet[i]->info.getName());
+		_graphviewer->setVertexColor(i+1,"green");
+
+	}
+	for (int i = numberOfStudents; i < numberOfStudents + numberOfOwners; i++) {
+		_graphviewer->addNode(i + 1, 350, 120 + 120 * (i - numberOfStudents));
+		_graphviewer->setVertexLabel(i+1,vertexSet[i]->info.getName());
+		_graphviewer->setVertexColor(i+1,"blue");
+	}
+	for (int i = numberOfStudents + numberOfOwners; i < vertexSet.size(); i++) {
+		_graphviewer->addNode(i + 1, 650, 120 + 120 * (i - numberOfStudents - numberOfOwners));
+		_graphviewer->setVertexLabel(i+1,vertexSet[i]->info.getName());
+		_graphviewer->setVertexColor(i+1,"red");
+
+	}
+
+	for (int i = 0; i < vertexSet.size(); i++) {
+		for (int j = 0; j < vertexSet[i]->adj.size(); j++) {
+			int l = vertexSet[i]->adj[j].dest->info.getId();
+			_graphviewer->addEdge(incares, i + 1, l, EdgeType::DIRECTED);
+
+			double s = vertexSet[i]->adj[j].weight;
+
+			_graphviewer->setEdgeWeight(incares, s+1);
+
+			if (vertexSet[i]->adj[j].proposed
+					&& !vertexSet[i]->adj[j].rejected) {
+				_graphviewer->setEdgeThickness(incares,2);
+				_graphviewer->setEdgeColor(incares,"blue");
+			} else{
+				_graphviewer->setEdgeThickness(incares,1);
+				_graphviewer->setEdgeColor(incares,"green");
 			}
-		}
-	}
-	return res;
-}
 
-template <class T>
-int Graph<T>::maxNewChildren(Vertex<T> *v, T &inf) const {
-	vector<T> res;
-	queue<Vertex<T> *> q;
-	queue<int> level;
-	int maxChildren=0;
-	inf =v->info;
-	q.push(v);
-	level.push(0);
-	v->visited = true;
-	while (!q.empty()) {
-		Vertex<T> *v1 = q.front();
-		q.pop();
-		res.push_back(v1->info);
-		int l=level.front();
-		level.pop(); l++;
-		int nChildren=0;
-		typename vector<Edge<T> >::iterator it=v1->adj.begin();
-		typename vector<Edge<T> >::iterator ite=v1->adj.end();
-		for (; it!=ite; it++) {
-			Vertex<T> *d = it->dest;
-			if (d->visited==false) {
-				d->visited=true;
-				q.push(d);
-				level.push(l);
-				nChildren++;
-			}
+			incares++;
 		}
-		if (nChildren>maxChildren) {
-			maxChildren=nChildren;
-			inf = v1->info;
-		}
-	}
-	return maxChildren;
-}
 
+	}
+	_graphviewer->rearrange();
+
+}
 
 
 #endif /* GRAPH_H_ */

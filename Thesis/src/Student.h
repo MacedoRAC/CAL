@@ -1,28 +1,26 @@
 #ifndef STUDENT_H_
 #define STUDENT_H_
 
-#include<string>
-#include<vector>
 #include"Person.h"
-#include"Project.h"
 
 using namespace std;
-class Project;
 
 class Student: public Person{
-public:
-	Student(Person* partner, string name, bool married, bool proj, vector<Project*> preferences);
-	~Student();
-	const vector<Project*>& getPreferences() const;
-	void setPreferences(const vector<Project*>& preferences);
-	bool isProject() const;
-	void setProject(bool project);
-
 private:
-	bool project;
-	vector<Project*> preferences;
+	
+
+public:
+	Student(int id, string name, vector<int> orderedPref, vector<int> priorityPref);
+
 };
 
 
-#endif // !STUDENT_H
+Student:: Student(int id, string name, vector<int> ordered, vector<int> priority ): Person(id, name, ordered, priority,0){
+	
+}
 
+
+
+
+
+#endif
