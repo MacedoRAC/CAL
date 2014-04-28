@@ -108,7 +108,50 @@ public:
 	Vertex<T> * getDest() {
 		return dest;
 	}
+
+	void setDest(const Vertex<T>*& dest);
+	bool isProposed() const;
+	void setProposed(bool proposed);
+	bool isRejected() const;
+	void setRejected(bool rejected);
+	double getWeight() const;
+	void setWeight(double weight);
 };
+
+template<class T>
+inline void Edge<T>::setDest(const Vertex<T>*& dest) {
+	this->dest = dest;
+}
+
+template<class T>
+inline bool Edge<T>::isProposed() const {
+	return proposed;
+}
+
+template<class T>
+inline void Edge<T>::setProposed(bool proposed) {
+	this->proposed = proposed;
+}
+
+template<class T>
+inline bool Edge<T>::isRejected() const {
+	return rejected;
+}
+
+template<class T>
+inline void Edge<T>::setRejected(bool rejected) {
+	this->rejected = rejected;
+}
+
+template<class T>
+inline double Edge<T>::getWeight() const {
+	return weight;
+}
+
+template<class T>
+inline void Edge<T>::setWeight(double weight) {
+	this->weight = weight;
+}
 
 template<class T>
 Edge<T>::Edge(Vertex<T> *d, double w) :
@@ -122,7 +165,7 @@ template<class T>
 class Graph {
 	vector<Vertex<T> *> vertexSet;
 	void dfs(Vertex<T> *v, vector<T> &res) const;
-	int numberOfStudents, numberOfProjects, numberOfMasters;
+	int numberOfStudents, numberOfOwners, numberOfMasters;
 
 public:
 	bool addVertex(const T &in);
@@ -130,13 +173,20 @@ public:
 	bool removeVertex(const T &in);
 	bool removeEdge(const T &sourc, const T &dest);
 	void setnumberOfStudents(int n);
-	void setnumberOfProjects(int n);
-	void printGraph();
+	void setnumberOfOwners(int n);
+	void drawGraph();
 	void setnumberOfMasters(int n);
 
 	//Exercicio 5
 	Vertex<T>* getVertex(const T &v) const;
-
+	int getNumberOfMasters() const;
+	void setNumberOfMasters(int numberOfMasters);
+	int getNumberOfOwners() const;
+	void setNumberOfOwners(int numberOfOwners);
+	int getNumberOfStudents() const;
+	void setNumberOfStudents(int numberOfStudents);
+	const vector<Vertex<T> *>& getVertexSet() const;
+	void setVertexSet(const vector<Vertex<T> *>& vertexSet);
 };
 
 template<class T>
@@ -161,8 +211,8 @@ void Graph<T>::setnumberOfStudents(int n) {
 }
 
 template<class T>
-void Graph<T>::setnumberOfProjects(int n) {
-	numberOfProjects = n;
+void Graph<T>::setnumberOfOwners(int n) {
+	numberOfOwners = n;
 }
 
 template<class T>
@@ -245,6 +295,46 @@ bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
 	return vS->removeEdgeTo(vD);
 }
 
+template<class T>
+inline int Graph<T>::getNumberOfMasters() const {
+	return numberOfMasters;
+}
+
+template<class T>
+inline void Graph<T>::setNumberOfMasters(int numberOfMasters) {
+	this->numberOfMasters = numberOfMasters;
+}
+
+template<class T>
+inline int Graph<T>::getNumberOfOwners() const {
+	return numberOfOwners;
+}
+
+template<class T>
+inline void Graph<T>::setNumberOfOwners(int numberOfOwners) {
+	this->numberOfOwners = numberOfOwners;
+}
+
+template<class T>
+inline int Graph<T>::getNumberOfStudents() const {
+	return numberOfStudents;
+}
+
+template<class T>
+inline void Graph<T>::setNumberOfStudents(int numberOfStudents) {
+	this->numberOfStudents = numberOfStudents;
+}
+
+template<class T>
+inline const vector<Vertex<T> *>& Graph<T>::getVertexSet() const {
+	return vertexSet;
+}
+
+template<class T>
+inline void Graph<T>::setVertexSet(const vector<Vertex<T> *>& vertexSet) {
+	this->vertexSet = vertexSet;
+}
+
 //****
 template<class T>
 Vertex<T>* Graph<T>::getVertex(const T &v) const {
@@ -256,7 +346,7 @@ Vertex<T>* Graph<T>::getVertex(const T &v) const {
 
 
 template<class T>
-void Graph<T>::printGraph() {
+void Graph<T>::drawGraph() {
 	int incares = 0;
 
 	GraphViewer* _graphviewer = new GraphViewer(800, 600, false);
@@ -268,13 +358,13 @@ void Graph<T>::printGraph() {
 		_graphviewer->setVertexColor(i+1,"green");
 
 	}
-	for (int i = numberOfStudents; i < numberOfStudents + numberOfProjects; i++) {
+	for (int i = numberOfStudents; i < numberOfStudents + numberOfOwners; i++) {
 		_graphviewer->addNode(i + 1, 350, 120 + 120 * (i - numberOfStudents));
 		_graphviewer->setVertexLabel(i+1,vertexSet[i]->info.getName());
 		_graphviewer->setVertexColor(i+1,"blue");
 	}
-	for (int i = numberOfStudents + numberOfProjects; i < vertexSet.size(); i++) {
-		_graphviewer->addNode(i + 1, 650, 120 + 120 * (i - numberOfStudents - numberOfProjects));
+	for (int i = numberOfStudents + numberOfOwners; i < vertexSet.size(); i++) {
+		_graphviewer->addNode(i + 1, 650, 120 + 120 * (i - numberOfStudents - numberOfOwners));
 		_graphviewer->setVertexLabel(i+1,vertexSet[i]->info.getName());
 		_graphviewer->setVertexColor(i+1,"red");
 

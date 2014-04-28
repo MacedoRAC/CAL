@@ -108,7 +108,7 @@ vector<Owner*> loadProjResp() {
 			priority.push_back(e);
 		}
 
-		Owner* owner = new Owner*(++id, name, nproj, ordered, priority);
+		Owner* owner = new Owner*(++id, name, ordered, priority, nproj);
 		owners.push_back(owner);
 
 	}
