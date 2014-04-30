@@ -15,7 +15,7 @@ public:
 };
 
 
-Owner:: Owner(int id, string name, vector<int> ordered, vector<int> priority, string nameOfProject): Person(id,name, ordered, priority,0){
+Owner:: Owner(int id, string name, vector<int> ordered, vector<int> priority, string nameOfProject): Person(id,name, ordered, priority){
 	this->nameOfProject=nameOfProject;
 }
 

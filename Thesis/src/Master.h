@@ -12,8 +12,8 @@ public:
 
 };
 
-Master:: Master(int id, string name, vector<int> ordered, vector<int> priority, int Nmax): Person(id,name, ordered, priority, Nmax){
-	
+Master:: Master(int id, string name, vector<int> ordered, vector<int> priority, int Nmax): Person(id,name, ordered, priority){
+	this->Nmax=Nmax;
 }
 
 

@@ -26,7 +26,6 @@ vector<Student*> loadStudents() {
 	string name;
 	vector<int> ordered;
 	vector<int> priority;
-	char slash;
 	int inc, e;
 
 	while (!is.eof()) {
@@ -59,7 +58,7 @@ vector<Student*> loadStudents() {
 
 	}
 	is.close();
-
+	cout << "Loaded " << students.size() << " Students" << endl;
 	return students;
 }
 
@@ -114,7 +113,7 @@ vector<Owner*> loadOwners() {
 	}
 
 	is.close();
-
+	cout << "Loaded " << owners.size() << " Owners" << endl;
 	return owners;
 }
 
@@ -132,7 +131,6 @@ vector<Master*> loadMasters() {
 	int max;
 	vector<int> ordered;
 	vector<int> priority;
-	char slash;
 	bool cont = true;
 	int e;
 	int inc;
@@ -170,7 +168,7 @@ vector<Master*> loadMasters() {
 
 	}
 	is.close();
-
+	cout << "Loaded " << masters.size() << " Masters" << endl;
 	return masters;
 
 }

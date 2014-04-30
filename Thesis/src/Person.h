@@ -7,7 +7,7 @@
 using namespace std;
 
 class Person{
-private:
+protected:
 	string name;
 	int id;
 	vector<int> Orderedpreferences;
@@ -15,7 +15,7 @@ private:
 	int Nmax;
 public:
 	Person();
-	Person(int id, string name, vector<int> Orderedpreferences, vector<int> Prioritypreferences, int Nmax);
+	Person(int id, string name, vector<int> Orderedpreferences, vector<int> Prioritypreferences);
 	int getId() const;
 	void setId(int id);
 	const string& getName() const;
@@ -35,12 +35,12 @@ Person::Person(){
 	this->id=0;
 }
 
-Person:: Person(int id, string name, vector<int> Orderedpreferences, vector<int> Prioritypreferences, int Nmax ){
+Person:: Person(int id, string name, vector<int> Orderedpreferences, vector<int> Prioritypreferences){
 	this->name=name;
 	this->id=id;
 	this->Orderedpreferences=Orderedpreferences;
 	this->Prioritypreferences=Prioritypreferences;
-	this->Nmax=Nmax;
+	this->Nmax=1;
 }
 
 inline int Person::getId() const {
@@ -60,7 +60,7 @@ inline void Person::setName(const string& name) {
 }
 
 inline bool Person::operator==(const Person &p){
-	return (name==p.getName());
+	return (id==p.getId());
 }
 
 #endif

@@ -1,12 +1,15 @@
-Ana Ferreira
+﻿Ana Ferreira
 2
+3
 1;2;5
-2;5
-João Cardoso
+2;3;5
+Joao Cardoso
 1
+2
 3;4
-1
+1;5
 Paula Miranda
 3
+4
 2;3;4;5
 1;2;3;4

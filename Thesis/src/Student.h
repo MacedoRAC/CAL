@@ -15,8 +15,8 @@ public:
 };
 
 
-Student:: Student(int id, string name, vector<int> ordered, vector<int> priority ): Person(id, name, ordered, priority,0){
-	
+Student:: Student(int id, string name, vector<int> ordered, vector<int> priority ) :Person(id, name, ordered, priority){
+
 }
 
 

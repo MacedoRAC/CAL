@@ -363,15 +363,15 @@ void Graph<T>::drawGraph() {
 		_graphviewer->setVertexLabel(i+1,vertexSet[i]->info.getName());
 		_graphviewer->setVertexColor(i+1,"blue");
 	}
-	for (int i = numberOfStudents + numberOfOwners; i < vertexSet.size(); i++) {
+	for (unsigned int i = numberOfStudents + numberOfOwners; i < vertexSet.size(); i++) {
 		_graphviewer->addNode(i + 1, 650, 120 + 120 * (i - numberOfStudents - numberOfOwners));
 		_graphviewer->setVertexLabel(i+1,vertexSet[i]->info.getName());
 		_graphviewer->setVertexColor(i+1,"red");
 
 	}
 
-	for (int i = 0; i < vertexSet.size(); i++) {
-		for (int j = 0; j < vertexSet[i]->adj.size(); j++) {
+	for (unsigned int i = 0; i < vertexSet.size(); i++) {
+		for (unsigned int j = 0; j < vertexSet[i]->adj.size(); j++) {
 			int l = vertexSet[i]->adj[j].dest->info.getId();
 			_graphviewer->addEdge(incares, i + 1, l, EdgeType::DIRECTED);
 

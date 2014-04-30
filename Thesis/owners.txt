@@ -1,24 +1,30 @@
-Blip
+﻿Blip
 Webdesign
+3
 1;2;4
-2;3
-António Cardoso
+2;3;4
+Antonio Cardoso
 Segurança de Sistemas
+2
 3;4
-1;2;3
+1;2
 Microsoft
 Visual Studio 2015
+4
 1;2;3;4
-1;2
+1;2;4;5
 Grind
 Android o futuro
+2
 2;5
-3;4;5
+3;4
 Miguuel Faria
 Algoritmos físicos
+3
 3;4;5
-2;3
+1;2;3
 Google
 Motores de busca
-1;
+2
+1;2
 1;3
