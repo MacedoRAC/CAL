@@ -21,8 +21,11 @@ Graph<Person>* graph;
 
 void inicializeGraphVertex() {
 	//add students to graph
-	for (unsigned int i = 0; i < students.size(); i++)
+	for (unsigned int i = 0; i < students.size(); i++){
+		cout << "Adding student with ID " << students[i]->getId() << endl;
 		graph->addVertex(*students[i]);
+		cout << "	Check student ID " << graph->getVertexSet()[i]->getInfo().getId() << endl;
+	}
 
 	//add owners to graph
 	for (unsigned int i = 0; i < owners.size(); i++)

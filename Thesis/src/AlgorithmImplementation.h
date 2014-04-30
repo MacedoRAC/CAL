@@ -4,28 +4,33 @@
 
 
 bool allStudentsHaveThesis(Graph<Person>* graph) {
-	bool result=false;
+
 	int inc = 0;
 	for (int i = 0; i < graph->getNumberOfStudents(); i++) {
-		result = false;
+		inc=0;
 		for (unsigned int j = 0; j < graph->getVertexSet()[i]->getAdj().size(); j++) {
-
+			cout<<"boolean check\n";
 			if (graph->getVertexSet()[i]->getAdj()[j].isProposed() && !graph->getVertexSet()[i]->getAdj()[j].isRejected()) {
-				result = true;
+				
 				inc++;
 			}
 		}
+		if(inc==0){
+		return false;
+		}
+
+
 	}
-	return result;
+	return true;
 }
 
 void thesisAttribuitiontoStudent(Graph<Person>* graph) { //applies stable marriage algorithm
 
-	int ed, min = -1;
+	
 
 	//go through students
 	for (int i = 0; i < graph->getNumberOfStudents(); i++) {
-
+		int ed, min = -1;
 		for (unsigned int j = 0; j < graph->getVertexSet()[i]->getAdj().size(); j++) {
 
 			if ((min == -1 || graph->vertexSet[i]->getAdj()[j].getWeight() < min)
@@ -50,9 +55,9 @@ void thesisAttribuitiontoStudent(Graph<Person>* graph) { //applies stable marria
 
 
 	for (int i = graph->getNumberOfStudents(); i < graph->getNumberOfStudents() + graph->getNumberOfOwners(); i++) {
-		min = -1;
-
+		int ed, min = -1;
 		for (unsigned int j = 0; j < graph->getVertexSet()[i]->getAdj().size(); j++) {
+			cout << "testing conection of edge to: " << graph->getVertexSet()[i]->getAdj()[j].getDest()->getInfo().getName() << endl;
 			if (graph->getVertexSet()[i]->getAdj()[j].isProposed() && !graph->getVertexSet()[i]->getAdj()[j].isRejected()) {
 				graph->getVertexSet()[i]->getAdj()[j].setRejected(true);
 
@@ -66,6 +71,7 @@ void thesisAttribuitiontoStudent(Graph<Person>* graph) { //applies stable marria
 
 			graph->getVertexSet()[i]->getAdj()[ed].setRejected(false);
 			Vertex<Person>* p = graph->getVertexSet()[i]->getAdj()[ed].getDest();
+			cout << "putting destiny : " << p->getInfo().getName() << endl;
 			for (unsigned int c = 0; c < p->getAdj().size(); c++) {
 				if (p->getAdj()[c].getDest()->getInfo() == graph->getVertexSet()[i]->getInfo())
 					p->getAdj()[c].setRejected(false);
@@ -349,7 +355,7 @@ void thesisAttribuitionMasters(Graph<Person>* graph) {
 			for (int i = 1; i < sizeMatrix; i++) {
 				int znum = 0;
 				for (int j = 1; j < sizeMatrix; j++) {
-					if (IDmatrix[i][j] == 0 && rejectedj[j] != -1 && rejectedi[i] != -1) {
+					if (IDmatrix[i][j] == 0 && !rejectedj[j] && !rejectedi[i]) {
 						znum++;
 					}
 				}
@@ -361,7 +367,7 @@ void thesisAttribuitionMasters(Graph<Person>* graph) {
 				for (int j = 1; j < sizeMatrix; j++) {
 					int znum = 0;
 					for (int i = 1; i < sizeMatrix; i++) {
-						if (IDmatrix[i][j] == 0 && rejectedj[j] != -1 && rejectedi[i] != -1) {
+						if (IDmatrix[i][j] == 0 && !rejectedj[j] && !rejectedi[i]) {
 							znum++;
 						}
 					}

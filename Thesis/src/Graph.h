@@ -28,7 +28,7 @@ class Vertex {
 	vector<Edge<T> > adj;
 	bool visited;
 	bool processing;
-	void addEdge(Vertex<T> *dest, double w);
+	void addEdge(Vertex<T> *dest, int w);
 	bool removeEdgeTo(Vertex<T> *d);
 
 	//folha pratica 5
@@ -70,7 +70,7 @@ info(in), visited(false), processing(false), indegree(0), dist(0) {
 }
 
 template<class T>
-void Vertex<T>::addEdge(Vertex<T> *dest, double w) {
+void Vertex<T>::addEdge(Vertex<T> *dest, int w) {
 	Edge<T> edgeD(dest, w);
 	adj.push_back(edgeD);
 }
@@ -91,11 +91,11 @@ int Vertex<T>::getIndegree() const {
 template<class T>
 class Edge {
 	Vertex<T> * dest;
-	double weight;
+	int weight;
 	bool proposed;
 	bool rejected;
 public:
-	Edge(Vertex<T> *d, double w);
+	Edge(Vertex<T> *d, int w);
 	friend class Graph<T> ;
 	friend class Vertex<T> ;
 
@@ -114,8 +114,8 @@ public:
 	void setProposed(bool proposed);
 	bool isRejected() const;
 	void setRejected(bool rejected);
-	double getWeight() const;
-	void setWeight(double weight);
+	int getWeight() const;
+	void setWeight(int weight);
 };
 
 template<class T>
@@ -144,17 +144,17 @@ inline void Edge<T>::setRejected(bool rejected) {
 }
 
 template<class T>
-inline double Edge<T>::getWeight() const {
+inline int Edge<T>::getWeight() const {
 	return weight;
 }
 
 template<class T>
-inline void Edge<T>::setWeight(double weight) {
+inline void Edge<T>::setWeight(int weight) {
 	this->weight = weight;
 }
 
 template<class T>
-Edge<T>::Edge(Vertex<T> *d, double w) :
+Edge<T>::Edge(Vertex<T> *d, int w) :
 dest(d), weight(w), proposed(false), rejected(false) {
 }
 
@@ -375,7 +375,7 @@ void Graph<T>::drawGraph() {
 			int l = vertexSet[i]->adj[j].dest->info.getId();
 			_graphviewer->addEdge(incares, i + 1, l, EdgeType::DIRECTED);
 
-			double s = vertexSet[i]->adj[j].weight;
+			int s = vertexSet[i]->adj[j].weight;
 
 			_graphviewer->setEdgeWeight(incares, s+1);
 
@@ -395,6 +395,7 @@ void Graph<T>::drawGraph() {
 	_graphviewer->rearrange();
 
 }
+
 
 
 #endif /* GRAPH_H_ */
